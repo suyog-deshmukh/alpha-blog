@@ -3,6 +3,8 @@ class ArticlesController < ApplicationController
   def show; end
 
   def index
+    # testt
+    puts request.headers["GATEWAY_INTERFACE"]
     @articles =Article.paginate(page: params[:page], per_page: 5)
 
   end
@@ -18,7 +20,7 @@ class ArticlesController < ApplicationController
     # render plain: params[:article]
     puts params
     @article = Article.new(article_param)
-    @article.user = User.first
+    @article.user = current_user
     if @article.save
       flash[:notice] = 'Article was created successfully'
       redirect_to article_path(@article) # same as redirect_to @article
